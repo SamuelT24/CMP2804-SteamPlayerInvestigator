@@ -51,4 +51,4 @@ def calculate_smurf_score(user_info, friend_count, number_of_games, total_playti
 def classify_account(score, threshold=None):
     if threshold is None:
         threshold = GENERAL["smurf_score_threshold"]
-    return "Likely Smurf Account" if score >= threshold else "Likely Genuine Account"
+    return "Likely Smurf" if score >= threshold else "Likely Genuine"
