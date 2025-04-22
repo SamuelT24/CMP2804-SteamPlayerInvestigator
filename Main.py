@@ -47,18 +47,34 @@ def process_steam_id(steam_id, api):
     print(f"Classification: {classification}")
     print("-" * 40)
     
-def main():
+    return user_info | {
+        "friend_count": friend_count,
+        "games_owned": number_of_games,
+        "playtime": total_playtime,
+        "vac_banned": vac_ban,
+        "smurf_score": score,
+        "classification": classification
+                        }
+
+
+def get_all_user_info_futures():
+    '''concurrently adds user details to a list as futures which is then 
+    returned, for faster processing'''
+
     steam_ids = read_steam_ids()
     if not steam_ids:
         print("No Steam IDs to process.")
-        return
+        return []
 
     api = SteamAPI()
-
+    future_list = []
     # Using ThreadPoolExecutor to process Steam IDs concurrently
     with ThreadPoolExecutor(max_workers=5) as executor:
         for steam_id in steam_ids:
-            executor.submit(process_steam_id, steam_id, api)
+            future = executor.submit(process_steam_id, steam_id, api)
+            future_list.append(future)
+
+    return [future.result() for future in future_list ]
 
 if __name__ == "__main__":
-    main()
+    get_all_user_info_futures()
