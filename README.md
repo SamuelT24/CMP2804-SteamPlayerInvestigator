@@ -1,7 +1,7 @@
 # CMP2804-SteamPlayerInvestigator
 
 IMPORTANT!: 
--> run from frontend.py in this version
+-> Run the project via Main.py
 -> make sure not to upload your steam api key (purpose of .gitignore)
 
 project overview: 
@@ -23,5 +23,7 @@ scoring.py: Implements the logic to calculate the smurf score.
 config.py: Defines all the thresholds and penalty values used in scoring. Adjust these values to find how we want accounts to be judged.
 
 main.py: The main script. It reads Steam IDs from steam_ids.txt, processes each account concurrently, and outputs a detailed report
+
+frontend.py: Manages our user window.
 
 ---
