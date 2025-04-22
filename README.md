@@ -1,4 +1,4 @@
-# TSE-9-Steam-player-
+# CMP2804-SteamPlayerInvestigator
 
 IMPORTANT!: 
 -> run from frontend.py in this version
