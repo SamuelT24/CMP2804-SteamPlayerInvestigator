@@ -2,9 +2,9 @@ import os
 import requests
 from dotenv import load_dotenv
 
-'''
+"""
 steam_api.py handles the fetching and formatting of API calls 
-'''
+"""
 # Load environment variables from .env
 load_dotenv()
 

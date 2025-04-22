@@ -1,8 +1,8 @@
 from datetime import datetime
 
-'''
+"""
 helpers.py contains functions to process and format the raw data from API.
-'''
+"""
 
 def unix_to_date(timestamp):
 # Convert a Unix timestamp to a simple date string
@@ -35,10 +35,10 @@ def format_report(user_info):
     if not user_info:
         return "No user data available."
     report = (
-        f"Name: {user_info.get('personaname')}\n"
-        f"Steam ID: {user_info.get('steam_id')}\n"
-        f"Account Created: {user_info.get('creation_date')}\n"
-        f"Account Age (days): {user_info.get('account_age')}\n"
+        f"Name: {user_info.get("personaname")}\n"
+        f"Steam ID: {user_info.get("steam_id")}\n"
+        f"Account Created: {user_info.get("creation_date")}\n"
+        f"Account Age (days): {user_info.get("account_age")}\n"
     )
     return report
 
