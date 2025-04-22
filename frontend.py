@@ -1,5 +1,4 @@
 import customtkinter as ctk
-from Main import get_all_user_info_futures
 
 #sets up window appearance
 ctk.set_appearance_mode("System")
@@ -79,7 +78,3 @@ class SmurfDetectorApp(ctk.CTk):
         for user in self.users:
             row = UserRow(self.user_frame, user)
             row.pack(fill="x", pady=5, padx=5)
-
-if __name__ == "__main__":
-    app = SmurfDetectorApp(get_all_user_info_futures())
-    app.mainloop()

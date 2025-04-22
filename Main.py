@@ -2,6 +2,7 @@ from steam_api import SteamAPI
 from helpers import (parse_user_info, format_report, parse_friend_count,parse_owned_games, parse_vac_ban)
 from scoring import calculate_smurf_score, classify_account
 from concurrent.futures import ThreadPoolExecutor
+from frontend import SmurfDetectorApp
 
 def read_steam_ids(file_path="steam_ids.txt"):
 # Read Steam IDs from the file one per line
@@ -79,4 +80,5 @@ def get_all_user_info_futures():
     return [future.result() for future in future_list ]
 
 if __name__ == "__main__":
-    get_all_user_info_futures()
+    app = SmurfDetectorApp(get_all_user_info_futures())
+    app.mainloop()
