@@ -1,187 +1,80 @@
-import os
-import requests
-from datetime import datetime, timezone
-from dotenv import load_dotenv
+from steam_api import SteamAPI
+from helpers import (parse_user_info, format_report, parse_friend_count,parse_owned_games, parse_vac_ban)
+from scoring import calculate_smurf_score, classify_account
+from concurrent.futures import ThreadPoolExecutor
 
-class SteamAPI: #loads enviroment variables from env file
-    def __init__(self):
-        """Initialize Steam API client"""
-        load_dotenv()
-        self.api_key = os.getenv('STEAM_API_KEY')
-        if not self.api_key:
-            raise ValueError("STEAM_API_KEY not found in environment variables")
-        self.base_url = "https://api.steampowered.com/"
-
-    def _get_data(self, endpoint, params): 
-        """Make API request with error handling"""
-        try:
-            params['key'] = self.api_key
-            response = requests.get(f"{self.base_url}{endpoint}", params=params)
-            response.raise_for_status()
-            return response.json()
-        except Exception as e:
-            print(f"Error accessing Steam API: {e}")
-            return None
-
-    def get_player_info(self, steam_id):
-        """Get player profile data"""
-        return self._get_data("ISteamUser/GetPlayerSummaries/v2", {"steamids": steam_id})
-
-    def get_friend_list(self, steam_id):
-        """Get friend list data"""
-        return self._get_data("ISteamUser/GetFriendList/v1", 
-                             {"steamid": steam_id, "relationship": "friend"})
-
-    def get_owned_games(self, steam_id):
-        """Get owned games data"""
-        return self._get_data("IPlayerService/GetOwnedGames/v1", 
-                             {"steamid": steam_id, "include_appinfo": "true", "include_played_free_games": "true"})
-
-    def get_bans(self, steam_id):
-        """Get ban information"""
-        return self._get_data("ISteamUser/GetPlayerBans/v1", {"steamids": steam_id})
-
-
-def unix_to_datetime(timestamp):
+def read_steam_ids(file_path="steam_ids.txt"):
+# Read Steam IDs from the file one per line
     try:
-        dt = datetime.fromtimestamp(timestamp, tz=timezone.utc)
-        dt = dt.astimezone()
-        return dt.strftime('%Y-%m-%d %H:%M:%S')
-    except Exception as e:
-        return "Date unavailable"
+        with open(file_path, "r") as f:
+            ids = [line.strip() for line in f if line.strip()]
+        return ids
+    except FileNotFoundError:
+        print(f"Error: File '{file_path}' not found.")
+        return []
 
-
-def format_playtime(minutes):
-    """Convert playtime from minutes to hours and minutes"""
-    if minutes == 0:
-        return "Never played"
-    hours = minutes // 60
-    remaining_minutes = minutes % 60
-    if hours == 0:
-        return f"{remaining_minutes}m"
-    elif remaining_minutes == 0:
-        return f"{hours}h"
-    else:
-        return f"{hours}h {remaining_minutes}m"
-
-
-def display_profile(data):
-    """Display Steam profile information"""
-    if not data or 'response' not in data or not data['response']['players']:
-        print("Profile not found or private")
-        return
-
-    player = data['response']['players'][0]
-    print("\n=== Steam Profile ===")
-    print(f"Name: {player.get('personaname', 'N/A')}")
-    if 'timecreated' in player:
-        print(f"Account Created: {unix_to_datetime(player['timecreated'])}")
-    print(f"Profile URL: {player.get('profileurl', 'N/A')}")
-
-    if player.get('communityvisibilitystate', 0) != 3:
-        print("Note: This profile is private")
-
-
-def display_friends(data):
-    """Display friend count"""
-    if not data or 'friendslist' not in data:
-        print("\nFriends list private or unavailable")
-        return
-
-    friends = data['friendslist']['friends']
-    print(f"\nFriend Count: {len(friends)}")
-
-
-def display_games(data):
-    """Display detailed games information"""
-    if not data or 'response' not in data:
-        print("\nGames list private or unavailable")
-        return
-
-    games = data['response'].get('games', [])
-    total_games = len(games)
-    
-    print(f"\n=== Games Owned: {total_games} ===")
-    
-    if total_games == 0:
-        return
-
-    # Sort games by playtime
-    games.sort(key=lambda x: x.get('playtime_forever', 0), reverse=True)
-
-    # Calculate total playtime
-    total_playtime = sum(game.get('playtime_forever', 0) for game in games)
-    print(f"Total Playtime: {format_playtime(total_playtime)}")
-    
-    print("\nGame List (sorted by playtime):")
-    print("-" * 60)
-    print(f"{'Name':<40} {'Playtime':<15} {'Last Played':<20}")
-    print("-" * 60)
-
-    for game in games:
-        name = game.get('name', 'Unknown Game')
-        playtime = format_playtime(game.get('playtime_forever', 0))
+def process_steam_id(steam_id, api):
+    print(f"\nFetching data for Steam ID: {steam_id}")
         
-        # Convert last played timestamp
-        last_played = game.get('rtime_last_played', 0)
-        if last_played > 0:
-            last_played_str = unix_to_datetime(last_played)
-        else:
-            last_played_str = "Never"
+    # Fetch player info and parse basic data
+    raw_data = api.get_player_info(steam_id) 
+    user_info = parse_user_info(raw_data)
 
-        # Truncate long game names
-        if len(name) > 37:
-            name = name[:34] + "..."
-
-        print(f"{name:<40} {playtime:<15} {last_played_str:<20}")
-
-
-def display_bans(data):
-    """Display ban information"""
-    if not data or not data.get('players'):
-        print("\nBan data unavailable")
-        return
-
-    player = data['players'][0]
-    print("\n=== Ban Status ===")
-    print(f"VAC Banned: {player.get('VACBanned', 'No')}")
-    print(f"VAC Bans: {player.get('NumberOfVACBans', 0)}")
-
-
-def main():
-    """Main function"""
-    try:
-        api = SteamAPI()
-    except ValueError as e:
-        print(f"Error: {e}")
-        return
-
-    while True:
-        steam_id = input("\nEnter Steam ID (or 'exit' to quit): ").strip()
-        if steam_id.lower() == 'exit':
-            break
-        if not steam_id:
-            continue
-
-        print("\nFetching data...")
+    # Fetch friends list number
+    friend_data = api.get_friend_list(steam_id)
+    friend_count = parse_friend_count(friend_data)
         
-        # Get and display profile data
-        profile = api.get_player_info(steam_id)
-        display_profile(profile)
+    # Fetch owned games info and total playtime
+    games_data = api.get_owned_games(steam_id)
+    number_of_games, total_playtime = parse_owned_games(games_data)
 
-        # Get and display additional data
-        friends = api.get_friend_list(steam_id)
-        display_friends(friends)
+    # Fetch ban information and determine VAC ban status
+    bans_data = api.get_bans(steam_id)
+    vac_ban = parse_vac_ban(bans_data)
 
-        games = api.get_owned_games(steam_id)
-        display_games(games)
+    # Fetches the clasification results
+    score = calculate_smurf_score(user_info, friend_count, number_of_games, total_playtime, vac_ban)
+    classification = classify_account(score)
 
-        bans = api.get_bans(steam_id)
-        display_bans(bans)
+    # Prints the combined report
+    print("User Info:")
+    print(format_report(user_info))
+    print(f"Friend Count: {friend_count}")
+    print(f"Number of Games Owned: {number_of_games}")
+    print(f"Total Playtime (minutes): {total_playtime}")
+    print(f"VAC Banned: {vac_ban}")
+    print(f"Smurf Score: {score}")
+    print(f"Classification: {classification}")
+    print("-" * 40)
+    
+    return user_info | {
+        "friend_count": friend_count,
+        "games_owned": number_of_games,
+        "playtime": total_playtime,
+        "vac_banned": vac_ban,
+        "smurf_score": score,
+        "classification": classification
+                        }
 
-        print("\n=== End of Report ===")
-        
 
+def get_all_user_info_futures():
+    '''concurrently adds user details to a list as futures which is then 
+    returned, for faster processing'''
+
+    steam_ids = read_steam_ids()
+    if not steam_ids:
+        print("No Steam IDs to process.")
+        return []
+
+    api = SteamAPI()
+    future_list = []
+    # Using ThreadPoolExecutor to process Steam IDs concurrently
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        for steam_id in steam_ids:
+            future = executor.submit(process_steam_id, steam_id, api)
+            future_list.append(future)
+
+    return [future.result() for future in future_list ]
 
 if __name__ == "__main__":
-    main()
+    get_all_user_info_futures()
