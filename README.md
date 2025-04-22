@@ -1,6 +1,7 @@
 # CMP2804-SteamPlayerInvestigator
 
-IMPORTANT!: 
+IMPORTANT!:
+-> python.exe -m pip install requirements.txt
 -> Run the project via Main.py
 -> make sure not to upload your steam api key (purpose of .gitignore)
 
