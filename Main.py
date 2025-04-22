@@ -59,7 +59,7 @@ def process_steam_id(steam_id, api):
 
 def get_all_user_info_futures():
     '''concurrently adds user details to a list as futures which is then 
-    returned, for faster processing'''
+    returned in order to give the UI information about the users'''
 
     steam_ids = read_steam_ids()
     if not steam_ids:
@@ -71,6 +71,8 @@ def get_all_user_info_futures():
     # Using ThreadPoolExecutor to process Steam IDs concurrently
     with ThreadPoolExecutor(max_workers=5) as executor:
         for steam_id in steam_ids:
+            '''futures represent a result of information that hasn't happened yet, used
+            to schedule multiple tasks and in a clean way'''
             future = executor.submit(process_steam_id, steam_id, api)
             future_list.append(future)
 

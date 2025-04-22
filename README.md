@@ -1,5 +1,9 @@
 # TSE-9-Steam-player-
 
+IMPORTANT!: 
+-> run from frontend.py in this version
+-> make sure not to upload your steam api key (purpose of .gitignore)
+
 project overview: 
 
 Steam Player Investigator is a project that will try to create a solution that determines whether a steam account is an alt account/secondary account
