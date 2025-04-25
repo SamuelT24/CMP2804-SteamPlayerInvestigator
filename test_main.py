@@ -1,4 +1,3 @@
-import pytest 
 from unittest.mock import patch, mock_open, MagicMock  
 from Main import read_steam_ids, process_steam_id
 
@@ -7,6 +6,7 @@ def test_read_steam_ids():
     mock_data = "111111111111111111\n222222222222222222"  
     with patch("builtins.open", mock_open(read_data=mock_data)): 
         result = read_steam_ids()
+        
         assert result == ["111111111111111111", "222222222222222222"]
 
 #test process_steam_id function
@@ -20,6 +20,7 @@ def test_process_steam_id():
          patch("Main.calculate_smurf_score", return_value=2):
 
         user_info = process_steam_id("id", mock_api)
+
         assert user_info["personaname"] == "TestUser"
         assert user_info["account_age"] == 1
         assert user_info["friend_count"] == 1
