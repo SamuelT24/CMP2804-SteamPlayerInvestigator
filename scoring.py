@@ -1,4 +1,4 @@
-from config import SCORE, GENERAL
+from config import SCORE, GENERAL, Classifications
 
 """
 Calculates a smurf score based on the account data
@@ -49,4 +49,4 @@ def calculate_smurf_score(user_info:dict, friend_count:int, number_of_games:int,
     return score
 
 def classify_account(score:int, threshold:int=GENERAL["smurf_score_threshold"]) -> str:
-    return "Likely Smurf" if score >= threshold else "Likely Genuine"
+    return Classifications.LIKELY_SMURF if score >= threshold else Classifications.LIKELY_GENUINE
