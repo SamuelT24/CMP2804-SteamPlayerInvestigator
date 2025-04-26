@@ -14,6 +14,9 @@ class UserRow(ctk.CTkFrame):
 
         #sets the row colour to red if steam profile is likely a smurf
         bg_color = "#f7b0b0" if user["classification"] == "Likely Smurf" else "#b6f7b0"
+
+        if user["classification"] != "Likely Smurf" and user["vac_banned"]:
+            bg_color = "#f7efb0"
         self.configure(fg_color=bg_color)
 
         #header frame
@@ -21,7 +24,7 @@ class UserRow(ctk.CTkFrame):
         self.header.pack(fill="x", padx=5, pady=2)
 
         #displays the basic information of each steam account
-        self.label = ctk.CTkLabel(self.header, text=f"{user["steam_id"]}   {user["personaname"]}  |  {user["classification"]}", text_color="#000000")
+        self.label = ctk.CTkLabel(self.header, text=f"{user["steam_id"]}   {user["personaname"]}  |  {user["classification"]} {("(Vac Banned)" if user["vac_banned"] else "")}", text_color="#000000")
         self.label.pack(side="left", padx=10)
 
 
