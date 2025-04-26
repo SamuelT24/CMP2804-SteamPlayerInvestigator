@@ -4,12 +4,12 @@ from config import SCORE, GENERAL
 Calculates a smurf score based on the account data
 """
 
-def calculate_smurf_score(user_info, friend_count, number_of_games, total_playtime, vac_ban):
+def calculate_smurf_score(user_info:dict, friend_count:int, number_of_games:int, total_playtime:int, vac_ban:bool) -> int:
 
     score = 0
     
     # Score based on account age and is given in days
-    account_age = user_info.get("account_age", 0)
+    account_age = (user_info.get("account_age", 0) if user_info else 0)
     age_config = SCORE["account_age"]
     if account_age == 0:
         score += age_config["penalty_zero_age"]
@@ -43,12 +43,10 @@ def calculate_smurf_score(user_info, friend_count, number_of_games, total_playti
         score += playtime_config["penalty_medium"]
 
     # Add a heavy penalty if account is VAC banned
-    if vac_ban == 1:
+    if vac_ban:
         score += SCORE["vac"]["penalty"]
 
     return score
 
-def classify_account(score, threshold=None):
-    if threshold is None:
-        threshold = GENERAL["smurf_score_threshold"]
+def classify_account(score:int, threshold:int=GENERAL["smurf_score_threshold"]) -> str:
     return "Likely Smurf" if score >= threshold else "Likely Genuine"
