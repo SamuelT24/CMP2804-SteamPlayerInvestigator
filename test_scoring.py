@@ -1,4 +1,5 @@
 from scoring import calculate_smurf_score, classify_account
+from config import Classifications
 
 #test calculate_smurf_score function
 def test_calculate_smurf_score(): 
@@ -13,8 +14,8 @@ def test_calculate_smurf_score():
 
 #test classify_account function
 def test_classify_account():
-    assert classify_account(2) == "Likely Genuine"
-    assert classify_account(10) == "Likely Smurf"
+    assert classify_account(2) == Classifications.LIKELY_GENUINE
+    assert classify_account(10) == Classifications.LIKELY_SMURF
     
 
 

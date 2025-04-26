@@ -51,3 +51,12 @@ SCORE = {
 GENERAL = {
     "smurf_score_threshold": 6   # Final threshold for classifying an account as smurf
 }
+
+from enum import Enum
+
+class Classifications(Enum):
+    LIKELY_SMURF = "Likely Smurf"
+    LIKELY_GENUINE = "Likely Genuine"
+
+    def __str__(self):
+        return self.value

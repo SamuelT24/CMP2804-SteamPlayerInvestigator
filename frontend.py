@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from config import Classifications
 
 #sets up window appearance
 ctk.set_appearance_mode("System")
@@ -13,9 +14,9 @@ class UserRow(ctk.CTkFrame):
         self.expanded = False
 
         #sets the row colour to red if steam profile is likely a smurf
-        bg_color = "#f7b0b0" if user["classification"] == "Likely Smurf" else "#b6f7b0"
+        bg_color = "#f7b0b0" if user["classification"] == Classifications.LIKELY_SMURF else "#b6f7b0"
 
-        if user["classification"] != "Likely Smurf" and user["vac_banned"]:
+        if user["classification"] != Classifications.LIKELY_SMURF and user["vac_banned"]:
             bg_color = "#f7efb0"
         self.configure(fg_color=bg_color)
 
