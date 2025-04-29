@@ -51,12 +51,18 @@ class UserRow(ctk.CTkFrame):
 
     def get_detail_text(self):
         """returns a formatted string displaying steam account info"""
+        
+        #convert playtime into hours before displaying
+        playtime_hours = self.user["playtime"] / 60
+        playtime_display = f'{playtime_hours:.1f}'
+
         return (
             f'Account Created: {self.user["creation_date"]}\n'
             f'Account Age (days): {self.user["account_age"]}\n'
             f'Friend Count: {self.user["friend_count"]}\n'
             f'Number of Games Owned: {self.user["games_owned"]}\n'
-            f'Total Playtime (minutes): {self.user["playtime"]}\n'
+
+            f'Total Playtime (hours): {playtime_display}\n'
             f'VAC Banned: {self.user["vac_banned"]}\n'
             f'Smurf Score: {self.user["smurf_score"]}\n'
             f'Classification: {self.user["classification"]}'
