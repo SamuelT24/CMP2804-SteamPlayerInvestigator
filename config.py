@@ -19,31 +19,31 @@ SCORE = {
     
     # Friend count
     "friend_count": {
-        "threshold_low": 10,        # Fewer than 10 friends
+        "threshold_low": 30,        # Fewer than 30 friends
         "penalty_low": 2,           # Penalty if friend count is low
-        "threshold_medium": 30,     # Between 10 and 30 friends
+        "threshold_medium": 70,     # Between 30 and 70 friends
         "penalty_medium": 1         # Penalty if friend count is at medium threshold
     },
 
     # Games owned
     "games_owned": {
-        "threshold_low": 5,         # Fewer than 5 games owned
+        "threshold_low": 20,         # Fewer than 20 games owned
         "penalty_low": 2,           # Penalty if few games are owned
-        "threshold_medium": 10,     # Between 5 and 10 games owned
+        "threshold_medium": 50,     # Between 20 and 50 games owned
         "penalty_medium": 1         # Penalty if game count is at medium threshold
     },
 
     # Total playtime, in minutes
     "playtime": {
-        "threshold_low": 500,          # Under 500 minutes of total playtime
+        "threshold_low": 6000,          # Under 6000 minutes (100 hours) of total playtime
         "penalty_low": 3,              # Penalty if playtime is very low
-        "threshold_medium": 2000,      # Between 500 and 2000 minutes
+        "threshold_medium": 30000,      # Between 6000 and 30000 minutes(100 and 500 hours) 
         "penalty_medium": 2            # Penalty if playtime is at medium threshold
     },
 
     # VAC ban penalty
     "vac": {
-        "penalty": 5  # Heavy penalty if the account is VAC banned
+        "penalty": 2  # penalty if the account is VAC banned
     }
 }
 
