@@ -32,12 +32,20 @@ frontend.py: Manages our user window.
 Any file with a "test_" prefix is for testing purposes, and not part of the main application.
 
 ## Credits
+
 John Atanbori - Project Supervisor
+
 Samuel Tracey (26392615)
+
 Anthony Johns (27948530)
+
 Oliver Niles (27704554)
+
 Riaz Ali (28689348)
+
 Scott Johnson (26579696)
+
 Zak Knell (26577836)
+
 
 Steam (https://steamcommunity.com/) for their API, used to collect account data.
