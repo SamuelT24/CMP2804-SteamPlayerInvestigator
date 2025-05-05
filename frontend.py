@@ -1,8 +1,9 @@
 import customtkinter as ctk
 from config import Classifications
+import user_config
 
 #sets up window appearance
-ctk.set_appearance_mode("System")
+ctk.set_appearance_mode("Dark" if user_config.dark_mode else "Light")
 ctk.set_default_color_theme("blue")
 
 class UserRow(ctk.CTkFrame):
