@@ -4,6 +4,7 @@ Steam Player Investigator is a project that will try to create a solution that d
 
 
 IMPORTANT!:
+
 -> python -m pip install -r requirements.txt
 
 -> python -m Main
