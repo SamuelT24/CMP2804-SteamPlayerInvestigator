@@ -160,5 +160,5 @@ cython_debug/
 #.idea/
 
 # User
-steam_ids.txt
 ./logs
+Config.yaml
