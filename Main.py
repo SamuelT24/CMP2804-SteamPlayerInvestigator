@@ -9,6 +9,7 @@ from frontend import SmurfDetectorApp
 from helpers import (parse_user_info, format_report, parse_friend_count,parse_owned_games, parse_vac_ban)
 from scoring import calculate_smurf_score, classify_account
 from steam_api import SteamAPI
+import user_config
 
 # Create logs directory then configure our logging system
 os.makedirs("logs", exist_ok=True)
@@ -29,15 +30,11 @@ logging.basicConfig(
 # All logging output using this logger will be under this name
 log = logging.getLogger("SteamPlayerInvestigatorBase")
 
-def read_steam_ids(file_path:str="steam_ids.txt") -> list[str]:
-    # Read Steam IDs from the file one per line
-    try:
-        with open(file_path, "r") as f:
-            ids = [line.strip() for line in f if line.strip()]
-        return ids
-    except FileNotFoundError:
-        log.error(f"Error: File \"{file_path}\" not found.")
-        return []
+
+
+def read_steam_ids() -> list[str]:
+    # Return steam IDs from our user_config file.
+    return user_config.steam_user_ids_to_investigate
 
 def process_steam_id(steam_id:str, api:SteamAPI) -> dict:
     log.info(f"\nFetching data for Steam ID: {steam_id}")

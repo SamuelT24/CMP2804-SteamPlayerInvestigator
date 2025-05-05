@@ -3,6 +3,7 @@ import os
 import requests
 from dotenv import load_dotenv
 from requests.exceptions import RequestException
+import user_config
 
 """
 steam_api.py handles the fetching and formatting of API calls 
@@ -10,9 +11,7 @@ steam_api.py handles the fetching and formatting of API calls
 # Load environment variables from .env
 load_dotenv()
 
-STEAM_API_KEY = os.getenv("STEAM_API_KEY")
-if not STEAM_API_KEY:
-    raise ValueError("STEAM_API_KEY not found in .env file.")
+STEAM_API_KEY = user_config.api_key
 
 BASE_URL = "https://api.steampowered.com/"
 

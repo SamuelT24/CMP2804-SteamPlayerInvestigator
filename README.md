@@ -11,9 +11,7 @@ Steam Player Investigator is a project that will try to create a solution that d
 
 ---
 
-env: Stores environment variables, including your Steam API key.
-
-steam_ids.txt: A text file Storing the Steam IDs you wish to analyze (one per line).
+Config.yaml: A config file for your steam API key, and for all of the steam user IDs you wish to analyse. This is generated after running the program for the first time.
 
 steam_api.py: Contains the "SteamAPI" class which manages communication with the Steam API to retrieve player info, friend lists, owned games, and ban data.
 
@@ -23,7 +21,7 @@ scoring.py: Implements the logic to calculate the smurf score.
 
 config.py: Defines all the thresholds and penalty values used in scoring. Adjust these values to find how we want accounts to be judged.
 
-main.py: The main script. It reads Steam IDs from steam_ids.txt, processes each account concurrently, and outputs a detailed report
+main.py: The main script. It reads Steam IDs from Config.yaml, processes each account concurrently, and outputs a detailed report
 
 frontend.py: Manages our user window.
 
