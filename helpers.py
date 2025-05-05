@@ -32,10 +32,10 @@ def format_report(user_info:dict) -> str:
     if not user_info:
         return "No user data available."
     report = (
-        f'Name: {user_info.get("personaname")}\n'
-        f'Steam ID: {user_info.get("steam_id")}\n'
-        f'Account Created: {user_info.get("creation_date")}\n'
-        f'Account Age (days): {user_info.get("account_age")}\n'
+        f"Name: {user_info.get("personaname")}\n"
+        f"Steam ID: {user_info.get("steam_id")}\n"
+        f"Account Created: {user_info.get("creation_date")}\n"
+        f"Account Age (days): {user_info.get("account_age")}\n"
     )
     return report
 

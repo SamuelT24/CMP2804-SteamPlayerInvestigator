@@ -64,7 +64,7 @@ def process_steam_id(steam_id:str, api:SteamAPI) -> dict:
 
     # Outputs the combined report
     additional_info = f"Friend Count: {friend_count}\nNumber of Games Owned: {number_of_games}\nTotal Playtime (minutes): {total_playtime}\nVAC Banned: {vac_ban}\nSmurf Score: {score}\nClassification: {classification}"
-    log.info(f'User Info:\n{"-" * 40}\n{format_report(user_info)}\n{additional_info}\n{("-" * 40)}')
+    log.info(f"User Info:\n{("-" * 40)}\n{format_report(user_info)}\n{additional_info}\n{("-" * 40)}")
     
     return (user_info or {}) | {
         "friend_count": friend_count,
