@@ -3,7 +3,7 @@
 Steam Player Investigator is a project that will try to create a solution that determines whether a steam account is an alternate/"smurf" account.
 
 
-IMPORTANT!:
+## How to run
 
 -> python -m pip install -r requirements.txt
 
