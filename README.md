@@ -5,6 +5,7 @@ Steam Player Investigator is a project that will try to create a solution that d
 
 IMPORTANT!:
 -> python -m pip install -r requirements.txt
+
 -> python -m Main
 
 Once a Config.yaml file has been generated, open it and set your api_key to your Steam API key. This application will not work without it. You can also change the IDs the program investigates, and whether you want dark mode enabled or disabled for the GUI.
