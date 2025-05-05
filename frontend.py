@@ -25,7 +25,7 @@ class UserRow(ctk.CTkFrame):
         self.header.pack(fill="x", padx=5, pady=2)
 
         #displays the basic information of each steam account
-        self.label = ctk.CTkLabel(self.header, text=f"{user["steam_id"]}   {user["personaname"]}  |  {user["classification"]} {("(Vac Banned)" if user["vac_banned"] else "")}", text_color="#000000")
+        self.label = ctk.CTkLabel(self.header, text=f'{user["steam_id"]}   {user["personaname"]}  |  {user["classification"]} {("(Vac Banned)" if user["vac_banned"] else "")}', text_color="#000000")
         self.label.pack(side="left", padx=10)
 
 
@@ -54,18 +54,18 @@ class UserRow(ctk.CTkFrame):
         
         #convert playtime into hours before displaying
         playtime_hours = self.user["playtime"] / 60
-        playtime_display = f"{playtime_hours:.1f}"
+        playtime_display = f'{playtime_hours:.1f}'
 
         return (
-            f"Account Created: {self.user["creation_date"]}\n"
-            f"Account Age (days): {self.user["account_age"]}\n"
-            f"Friend Count: {self.user["friend_count"]}\n"
-            f"Number of Games Owned: {self.user["games_owned"]}\n"
+            f'Account Created: {self.user["creation_date"]}\n'
+            f'Account Age (days): {self.user["account_age"]}\n'
+            f'Friend Count: {self.user["friend_count"]}\n'
+            f'Number of Games Owned: {self.user["games_owned"]}\n'
 
-            f"Total Playtime (hours): {playtime_display}\n"
-            f"VAC Banned: {self.user["vac_banned"]}\n"
-            f"Smurf Score: {self.user["smurf_score"]}\n"
-            f"Classification: {self.user["classification"]}"
+            f'Total Playtime (hours): {playtime_display}\n'
+            f'VAC Banned: {self.user["vac_banned"]}\n'
+            f'Smurf Score: {self.user["smurf_score"]}\n'
+            f'Classification: {self.user["classification"]}'
         )
 
 class SmurfDetectorApp(ctk.CTk):
