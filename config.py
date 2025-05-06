@@ -16,8 +16,7 @@ SCORE = {
         "penalty_low": 3,           # Penalty if low account age threshold is met
         "threshold_medium": 365,    # Account age less than 365 days
         "penalty_medium": 2,        # Penalty if medium account age threshold is met
-        "threshold_high": 730,      # Account age less than 730 days 
-        "penalty_high": 0           # No penalty if high account age threshold is met
+        "penalty_high": 0           # No penalty if medium threshold is surpassed
     },
     
     # Friend count
@@ -28,20 +27,20 @@ SCORE = {
         "penalty_low": 2,           # Penalty if low threshold is met
         "threshold_medium": 70,     # Between 30 and 70 friends
         "penalty_medium": 1,        # Penalty if medium threshold is met
-        "threshold_high": 150,      # Between 70 and 150 friends
-        "penalty_high": 0           # No penalty if high threshold is met
+        "penalty_high": 0           # No penalty if medium threshold is surpassed
     },
 
     # Games owned
     "games_owned": {
-        "threshold_very_low": 2,    # Fewer than 2 games owned
-        "penalty_very_low": 5,      # Penalty if very low games threshold is met
-        "threshold_low": 20,        # Between 2 and 20 games owned
+        "threshold_single_game": 2, # Fewer than 2 games owned
+        "penalty_single_game": 5,   # Penalty if single game threshold is met
+        "threshold_very_low": 10,   # Between 2 and 10 games owned
+        "penalty_very_low": 4,      # Penalty if very low games threshold is met
+        "threshold_low": 20,        # Between 10 and 20 games owned
         "penalty_low": 2,           # Penalty if low games threshold is met
         "threshold_medium": 50,     # Between 20 and 50 games owned
         "penalty_medium": 1,        # Penalty if medium games threshold is met
-        "threshold_high": 100,      # Between 50 and 100 games owned
-        "penalty_high": 0           # No penalty if high games threshold is met
+        "penalty_high": 0           # No penalty if meduim threshold is surpassed
     },
 
     # Total playtime, in minutes

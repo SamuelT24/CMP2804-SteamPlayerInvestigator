@@ -19,7 +19,7 @@ def calculate_smurf_score(user_info:dict, friend_count:int, number_of_games:int,
         score += age_config["penalty_low"]
     elif account_age < age_config["threshold_medium"]:
         score += age_config["penalty_medium"]
-    elif account_age < age_config["threshold_high"]:
+    elif account_age > age_config["threshold_medium"]:
         score += age_config["penalty_high"]
 
 
@@ -31,19 +31,21 @@ def calculate_smurf_score(user_info:dict, friend_count:int, number_of_games:int,
         score += friend_config["penalty_low"]
     elif friend_count < friend_config["threshold_medium"]:
         score += friend_config["penalty_medium"]
-    elif friend_count < friend_config["threshold_high"]:
+    elif friend_count > friend_config["threshold_medium"]:
         score += friend_config["penalty_high"]
 
 
     # Score based on the number of games owned
     games_config = SCORE["games_owned"]
-    if number_of_games < games_config["threshold_very_low"]:
+    if number_of_games < games_config["threshold_single_game"]:
+        score += games_config["penalty_single_game"]
+    elif number_of_games < games_config["threshold_very_low"]:
         score += games_config["penalty_very_low"]
     elif number_of_games < games_config["threshold_low"]:
         score += games_config["penalty_low"]
     elif number_of_games < games_config["threshold_medium"]:
         score += games_config["penalty_medium"]
-    elif number_of_games < games_config["threshold_high"]:
+    elif number_of_games > games_config["threshold_medium"]:
         score += games_config["penalty_high"]
 
     # Score based on total playtime which is in minutes
@@ -54,7 +56,7 @@ def calculate_smurf_score(user_info:dict, friend_count:int, number_of_games:int,
         score += playtime_config["penalty_medium"]
     elif total_playtime < playtime_config["threshold_high"]:
         score += playtime_config["penalty_high"]
-    elif total_playtime > playtime_config["threshold_high"]:
+    elif total_playtime >= playtime_config["threshold_high"]:
         score += playtime_config["penalty_very_high"]
 
     # Add a penalty if account is VAC banned
