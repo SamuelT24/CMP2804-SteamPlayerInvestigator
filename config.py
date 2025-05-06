@@ -9,36 +9,50 @@ Each section is organised by the what it affects.
 SCORE = {
     # Account age, in days
     "account_age": {
-        "penalty_zero_age": 5,               # Penalty if the account age is zero
-        "threshold_high_penalty": 180,       # If account age is less than 180 days, receives a high penalty
-        "penalty_high": 3,                   # Penalty for accounts younger than 180 days
-        "threshold_medium_penalty": 365,     # Account age less than 365 days receives a medium penalty
-        "penalty_medium": 2,                 # Penalty for accounts between 180 and 365 days old
-        "penalty_low": 0                     # No penalty for accounts older than 365 days
+        "penalty_zero_age": 5,      # Penalty if the account age is zero
+        "threshold_very_low": 21,   # Account age less than 21 days
+        "penalty_very_low": 4,      # Penalty if very low account age threshold is met
+        "threshold_low": 180,       # Account age less than 180 days
+        "penalty_low": 3,           # Penalty if low account age threshold is met
+        "threshold_medium": 365,    # Account age less than 365 days
+        "penalty_medium": 2,        # Penalty if medium account age threshold is met
+        "threshold_high": 730,      # Account age less than 730 days 
+        "penalty_high": 0           # No penalty if high account age threshold is met
     },
     
     # Friend count
     "friend_count": {
-        "threshold_low": 30,        # Fewer than 30 friends
-        "penalty_low": 2,           # Penalty if friend count is low
+        "threshold_very_low": 5,    # Less than 5 friends
+        "penalty_very_low": 5,      # Penalty if very low threshold is met
+        "threshold_low": 30,        # Betwwen 5 and 30 friends
+        "penalty_low": 2,           # Penalty if low threshold is met
         "threshold_medium": 70,     # Between 30 and 70 friends
-        "penalty_medium": 1         # Penalty if friend count is at medium threshold
+        "penalty_medium": 1,        # Penalty if medium threshold is met
+        "threshold_high": 150,      # Between 70 and 150 friends
+        "penalty_high": 0           # No penalty if high threshold is met
     },
 
     # Games owned
     "games_owned": {
-        "threshold_low": 20,         # Fewer than 20 games owned
-        "penalty_low": 2,           # Penalty if few games are owned
+        "threshold_very_low": 2,    # Fewer than 2 games owned
+        "penalty_very_low": 5,      # Penalty if very low games threshold is met
+        "threshold_low": 20,        # Between 2 and 20 games owned
+        "penalty_low": 2,           # Penalty if low games threshold is met
         "threshold_medium": 50,     # Between 20 and 50 games owned
-        "penalty_medium": 1         # Penalty if game count is at medium threshold
+        "penalty_medium": 1,        # Penalty if medium games threshold is met
+        "threshold_high": 100,      # Between 50 and 100 games owned
+        "penalty_high": 0           # No penalty if high games threshold is met
     },
 
     # Total playtime, in minutes
     "playtime": {
-        "threshold_low": 6000,          # Under 6000 minutes (100 hours) of total playtime
-        "penalty_low": 3,              # Penalty if playtime is very low
-        "threshold_medium": 30000,      # Between 6000 and 30000 minutes(100 and 500 hours) 
-        "penalty_medium": 2            # Penalty if playtime is at medium threshold
+        "threshold_low": 6000,         # Under 6000 minutes (100 hours) of total playtime
+        "penalty_low": 3,              # Penalty if low playtime threshold is met
+        "threshold_medium": 30000,     # Between 6000 and 30000 minutes (100 and 500 hours) of total playtime
+        "penalty_medium": 2,           # Penalty if medium playtime threshold is met
+        "threshold_high": 120000,      # Between 30000 and 60000 minutes (500 and 2000 hours) of total playtime
+        "penalty_high": 0,             # No penalty if high playtime threshold is met
+        "penalty_very_high": -1        # If playtime is over 120000 minutes (2000 hours) then reduce smurf score
     },
 
     # VAC ban penalty
