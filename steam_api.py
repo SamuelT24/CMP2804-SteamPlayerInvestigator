@@ -1,15 +1,10 @@
 import logging
-import os
 import requests
-from dotenv import load_dotenv
-from requests.exceptions import RequestException
 import user_config
 
 """
 steam_api.py handles the fetching and formatting of API calls 
 """
-# Load environment variables from .env
-load_dotenv()
 
 STEAM_API_KEY = user_config.api_key
 
@@ -28,7 +23,7 @@ class SteamAPI:
             response = requests.get(url, params=params, timeout=10)
             response.raise_for_status()    # raises for HTTP 4xx/5xx
             return response.json()
-        except RequestException as e:
+        except requests.exceptions.RequestException as e:
             self.log.error(f"[SteamAPI] {endpoint} failed: {e}")
             return {}
         

@@ -4,10 +4,6 @@
 test_helpers.py - Unit tests for helpers.py
 
 """
-
-import os
-from datetime import datetime
-import pytest
 from helpers import (
     parse_user_info,
     format_report,
